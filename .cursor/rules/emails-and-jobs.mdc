@@ -1,0 +1,19 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Action Mailer, SendGrid integration & Delayed Job rules
+globs:
+  - "app/mailers/**/*.rb"
+  - "app/jobs/**/*.rb"
+  - "config/initializers/delayed_job*.rb"
+alwaysApply: true
+---
+
+- Use **Action Mailer** + `sendgrid-ruby` v3 client only.
+- **InviteMailer** and **FeedbackMailer** must enqueue via `deliver_later` (Delayed Job).
+- Retry strategy: automatic **3× exponential back-off** on any non-2 xx response from SendGrid.
+- Include signed score (±) in notification subject; body = first 250 chars then “…View in app”.
+- Invite tokens expire **48 h** after creation; mail must state expiry clearly.

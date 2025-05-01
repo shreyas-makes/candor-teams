@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Minitest, performance targets & CI matrix
+globs:
+  - "test/**/*"
+  - ".github/workflows/**/*"
+alwaysApply: true
+---
+
+- Tests use **Minitest**; factories via FactoryBot style syntax.
+- System tests with Capybara + Headless Chrome.
+- Performance spec: with 25×25 (625) feedbacks, `/matrix` JSON must render ≤ 100 ms and canvas paint ≤ 50 ms.
+- CI: run `rails test`, RuboCop & Brakeman on push; GitHub Actions matrix – Ruby 3.3 & 3.2 against PostgreSQL 15.

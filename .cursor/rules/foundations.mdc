@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Candor Teams – language, framework & global coding defaults
+globs:
+  - "**/*.{rb,rake,erb,js,ts,yml}"
+alwaysApply: true
+---
+
+- Use **Ruby 3.3** + **Rails 8.0** (Speedrail template).
+- Prefer generators; keep Speedrail’s file structure.
+- All persistence & comparisons use **UTC**; never store or depend on local time-zones.
+- Follow the Rails style-guide + RuboCop defaults; enable `rubocop-minitest`.
+- Disallow adding gems not listed in the spec without human approval.

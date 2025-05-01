@@ -1,0 +1,16 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Auth, authorisation & request throttling constraints
+globs:
+  - "**/*.rb"
+alwaysApply: true
+---
+
+- Authenticate solely with `omniauth-google-oauth2` server flow.
+- Session cookie: `Secure`, `HttpOnly`, `SameSite=Lax`, idle 24 h, rolling 30 d.
+- Use **Pundit** (or PORO policy) – every policy MUST check `current_user.team_id == record.team_id`.
+- Enable **Rack::Attack**: limit OAuth POST & feedback POST to **20 req/min/IP**.

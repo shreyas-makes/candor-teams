@@ -1,0 +1,18 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Tables, relationships & business invariants
+globs:
+  - "app/models/**/*.rb"
+  - "db/migrate/**/*.rb"
+alwaysApply: true
+---
+
+- Create tables **teams**, **users**, **feedbacks**, **invites** exactly as specced.
+- **UNIQUE (author_id, recipient_id, week_start)** on feedbacks; disallow self-feedback.
+- All FKs `ON DELETE CASCADE`.
+- Expose a model helper `Feedback#week_start` that snaps any Date/Time to the UTC-Monday of its week.
+- Deleting feedback reopens that (author, recipient, week) slot.

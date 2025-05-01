@@ -1,0 +1,19 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Hotwire, Tailwind & D3 rules for the heat-map UI
+globs:
+  - "app/javascript/**/*"
+  - "app/views/**/*"
+alwaysApply: true
+---
+
+- Use **Turbo + Stimulus** controllers; one concern per controller.
+- Styling strictly via **Tailwind utility classes**; no custom CSS files unless impossible.
+- Import `d3` through ESBuild/Vite; color scale uses  
+  `d3.interpolateRdYlGn((score + 5) / 10)`.
+- Shuffle heat-map rows & columns on every page-load (`Array#sort(() => Math.random()-0.5)`).
+- Show numeric average (ceil) inside each cell; ARIA label must include the score.

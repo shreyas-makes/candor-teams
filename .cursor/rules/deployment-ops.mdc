@@ -1,0 +1,21 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Procfile, env-vars & operational health
+globs:
+  - "Procfile"
+  - ".fly.yml"
+  - "fly.toml"
+  - "config/**/*"
+alwaysApply: true
+---
+
+- Required ENV vars: `SENDGRID_API_KEY`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `RAILS_MASTER_KEY`.
+- **Procfile** _must_ contain  
+  `web: bundle exec puma -C config/puma.rb`  
+  `worker: bundle exec rake jobs:work`
+- Provide `GET /up` health-check that returns 200 OK JSON `{status:"ok"}`.
+- Target a PostgreSQL-capable host (Hatchbox); migrations deploy via platform hook.
