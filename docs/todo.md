@@ -24,10 +24,10 @@
 - [x] Run and verify tests
 
 ## Team Authorization (Prompt 4)
-- [ ] Generate team policy: `rails g pundit:policy team`
-- [ ] Implement `TeamPolicy#update?` to allow only team admin
-- [ ] Create policy spec verifying admin allowed, member denied
-- [ ] Run and verify tests
+- [x] Generate team policy: `rails g pundit:policy team`
+- [x] Implement `TeamPolicy#update?` to allow only team admin
+- [x] Create policy spec verifying admin allowed, member denied
+- [x] Run and verify tests
 
 ## Admin Interface (Prompt 5)
 - [ ] Generate Admin resource: `rails g active_admin:resource Team`
