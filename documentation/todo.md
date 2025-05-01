@@ -63,10 +63,25 @@
 - [x] Add email validation for presence and format
 - [x] Implement `expired?` helper method
 - [x] Create spec that verifies token uniqueness
-- [ ] Generate mailer: `rails g mailer InviteMailer new_invite`
-- [ ] Configure to deliver later with Delayed Job
-- [ ] Create spec that checks job enqueuing and mail.to
-- [ ] Run and verify tests
+- [x] Generate mailer: `rails g mailer InviteMailer new_invite`
+- [x] Configure to deliver later with Delayed Job
+- [x] Create spec that checks job enqueuing and mail.to
+- [x] Run and verify tests
+
+## Invite Controller (Prompt 11)
+- [x] Generate Invites controller: `rails g controller Invites`
+- [x] Implement create action to build invite and send mail
+- [x] Implement claim action to handle token, join team, revoke invite
+- [x] Add routes:
+  ```ruby
+  resources :invites, only: :create do
+    get 'claim/:token', on: :collection, action: :claim, as: :claim
+  end
+  ```
+- [x] Create feature spec for admin sends invite, visitor claims
+- [x] Update dashboard view with invite form
+- [x] Update registrations controller to handle invitation tokens
+- [x] Run and verify tests
 
 ## Feedback Matrix (Prompt 12)
 - [ ] Add route: `get '/matrix', to: 'feedbacks#matrix'`

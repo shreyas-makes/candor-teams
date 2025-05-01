@@ -8,6 +8,10 @@ class TeamPolicy < ApplicationPolicy
   def update?
     user.id == record.admin_id
   end
+  
+  def create?
+    user.team_id == record.id && (user.id == record.admin_id || user.role == 'admin')
+  end
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!

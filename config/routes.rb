@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   resources :billing_portal, only: [:new, :create]
   resources :blog_posts, controller: :blog_posts, path: "blog", param: :slug
 
+  # Invite routes
+  resources :invites, only: :create do
+    get 'claim/:token', on: :collection, action: :claim, as: :claim
+  end
+
   # static pages
   pages = %w[
     privacy terms
