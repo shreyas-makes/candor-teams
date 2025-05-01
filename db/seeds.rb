@@ -4,5 +4,7 @@
 raise StandardError, "DO NOT RUN THIS IN PRODUCTION" if Rails.env.production?
 
 require 'seed_support/rewardful'
+require 'seed_support/team'
 
 SeedSupport::Rewardful.run
+SeedSupport::Team.run
