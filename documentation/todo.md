@@ -57,7 +57,12 @@
 - [ ] Create request specs for success/failure cases
 - [ ] Run and verify tests
 
-## Invite Mailer (Prompt 10)
+## Invite Model & Mailer (Prompt 10)
+- [x] Generate Invite model: `rails g model Invite team:references{uuid} email:string token:string:index expires_at:datetime`
+- [x] Add before_create callback to generate SecureRandom.uuid for token
+- [x] Add email validation for presence and format
+- [x] Implement `expired?` helper method
+- [x] Create spec that verifies token uniqueness
 - [ ] Generate mailer: `rails g mailer InviteMailer new_invite`
 - [ ] Configure to deliver later with Delayed Job
 - [ ] Create spec that checks job enqueuing and mail.to

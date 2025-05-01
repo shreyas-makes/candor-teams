@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles */
+    </style>
+  </head>
+
+  <body>
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
+      <h1>You've been invited to join <%= @team.name %></h1>
+      
+      <p>You've been invited to join the <%= @team.name %> team on Candor Teams.</p>
+      
+      <p>Candor Teams is a platform where team members provide weekly feedback to each other, helping everyone grow together.</p>
+      
+      <div style="margin: 30px 0;">
+        <a href="<%= "#{Rails.application.credentials.base_url}/invites/claim/#{@invite.token}" %>" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+          Accept Invitation
+        </a>
+      </div>
+      
+      <p><strong>Important:</strong> This invitation will expire on <%= @expires_at %>.</p>
+      
+      <p>If you have any questions, feel free to reply to this email.</p>
+      
+      <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;" />
+      
+      <p style="color: #777; font-size: 12px;">
+        If you weren't expecting this invitation, you can safely ignore this email.
+      </p>
+    </div>
+  </body>
+</html>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_01_215921) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_01_230000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -89,6 +89,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_215921) do
     t.index ["recipient_id"], name: "index_feedbacks_on_recipient_id"
   end
 
+  create_table "invites", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "email", null: false
+    t.string "token", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_invites_on_team_id"
+    t.index ["token"], name: "index_invites_on_token", unique: true
+  end
+
   create_table "mail_logs", force: :cascade do |t|
     t.bigint "user_id"
     t.string "mailer"
@@ -138,4 +149,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_215921) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "feedbacks", "users", column: "author_id", on_delete: :cascade
   add_foreign_key "feedbacks", "users", column: "recipient_id", on_delete: :cascade
+  add_foreign_key "invites", "teams", on_delete: :cascade
 end
