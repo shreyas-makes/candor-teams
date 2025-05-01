@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_01_212011) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_01_215921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,6 +76,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_212011) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.bigint "author_id", null: false
+    t.bigint "recipient_id", null: false
+    t.integer "score", null: false
+    t.text "comment", null: false
+    t.date "week_start", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id", "recipient_id", "week_start"], name: "index_feedbacks_on_author_id_and_recipient_id_and_week_start", unique: true
+    t.index ["author_id"], name: "index_feedbacks_on_author_id"
+    t.index ["recipient_id"], name: "index_feedbacks_on_recipient_id"
+  end
+
   create_table "mail_logs", force: :cascade do |t|
     t.bigint "user_id"
     t.string "mailer"
@@ -123,4 +136,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_212011) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "feedbacks", "users", column: "author_id", on_delete: :cascade
+  add_foreign_key "feedbacks", "users", column: "recipient_id", on_delete: :cascade
 end
