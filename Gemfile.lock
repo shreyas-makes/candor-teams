@@ -301,6 +301,8 @@ GEM
     public_suffix (6.0.1)
     puma (6.4.2)
       nio4r (~> 2.0)
+    pundit (2.5.0)
+      activesupport (>= 3.0.0)
     racc (1.8.1)
     rack (3.1.8)
     rack-cors (2.0.2)
@@ -532,6 +534,7 @@ DEPENDENCIES
   postmark-rails
   pretender
   puma (= 6.4.2)
+  pundit
   rack-cors
   rails (= 8.0.0.rc1)
   redis

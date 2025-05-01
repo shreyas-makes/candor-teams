@@ -1,27 +1,27 @@
 # Candor Teams Project Checklist
 
 ## Setup and CI (Prompt 1)
-- [ ] Add "Run RSpec" step to `.github/workflows/ci.yml` if missing
-- [ ] Create smoke spec in `spec/smoke/speedrail_spec.rb` to verify Rails version
-- [ ] Run and verify tests pass with `bundle exec rspec`
+- [x] Add "Run RSpec" step to `.github/workflows/ci.yml` if missing
+- [x] Create smoke spec in `spec/smoke/speedrail_spec.rb` to verify Rails version
+- [x] Run and verify tests pass with `bundle exec rspec`
 
 ## Team Model (Prompt 2)
-- [ ] Generate Team model: `rails g model Team name:string max_members:integer admin_id:uuid`
-- [ ] Add team_id to Users: `rails g migration AddTeamIdToUsers team:uuid:index`
-- [ ] Set up associations:
-  - [ ] Team has_many :users
-  - [ ] User belongs_to :team, optional: true
-- [ ] Add validations to Team model:
-  - [ ] name (presence)
-  - [ ] max_members (>=1)
-- [ ] Create model specs for validations and associations
-- [ ] Run migrations and tests
+- [x] Generate Team model: `rails g model Team name:string max_members:integer admin_id:uuid`
+- [x] Add team_id to Users: `rails g migration AddTeamIdToUsers team:uuid:index`
+- [x] Set up associations:
+  - [x] Team has_many :users
+  - [x] User belongs_to :team, optional: true
+- [x] Add validations to Team model:
+  - [x] name (presence)
+  - [x] max_members (>=1)
+- [x] Create model specs for validations and associations
+- [x] Run migrations and tests
 
 ## Team Seeding (Prompt 3)
-- [ ] Update `db/seeds.rb` to create 'Demo' team
-- [ ] Attach existing users to the team
-- [ ] Create seed spec that verifies Team.count == 1
-- [ ] Run and verify tests
+- [x] Update `db/seeds.rb` to create 'Demo' team
+- [x] Attach existing users to the team
+- [x] Create seed spec that verifies Team.count == 1
+- [x] Run and verify tests
 
 ## Team Authorization (Prompt 4)
 - [ ] Generate team policy: `rails g pundit:policy team`
