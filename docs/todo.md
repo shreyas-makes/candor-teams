@@ -1,0 +1,83 @@
+# Candor Teams Project Checklist
+
+## Setup and CI (Prompt 1)
+- [ ] Add "Run RSpec" step to `.github/workflows/ci.yml` if missing
+- [ ] Create smoke spec in `spec/smoke/speedrail_spec.rb` to verify Rails version
+- [ ] Run and verify tests pass with `bundle exec rspec`
+
+## Team Model (Prompt 2)
+- [ ] Generate Team model: `rails g model Team name:string max_members:integer admin_id:uuid`
+- [ ] Add team_id to Users: `rails g migration AddTeamIdToUsers team:uuid:index`
+- [ ] Set up associations:
+  - [ ] Team has_many :users
+  - [ ] User belongs_to :team, optional: true
+- [ ] Add validations to Team model:
+  - [ ] name (presence)
+  - [ ] max_members (>=1)
+- [ ] Create model specs for validations and associations
+- [ ] Run migrations and tests
+
+## Team Seeding (Prompt 3)
+- [ ] Update `db/seeds.rb` to create 'Demo' team
+- [ ] Attach existing users to the team
+- [ ] Create seed spec that verifies Team.count == 1
+- [ ] Run and verify tests
+
+## Team Authorization (Prompt 4)
+- [ ] Generate team policy: `rails g pundit:policy team`
+- [ ] Implement `TeamPolicy#update?` to allow only team admin
+- [ ] Create policy spec verifying admin allowed, member denied
+- [ ] Run and verify tests
+
+## Admin Interface (Prompt 5)
+- [ ] Generate Admin resource: `rails g active_admin:resource Team`
+- [ ] Permit :name and :max_members params
+- [ ] Remove :destroy action
+- [ ] Create system spec that tests admin can edit team name
+- [ ] Run and verify tests
+
+## Feedback Model (Prompt 6)
+- [ ] Generate Feedback model: `rails g model Feedback author_id:uuid recipient_id:uuid score:integer comment:text week_start:date`
+- [ ] Add validations:
+  - [ ] score (inclusion in -5..5)
+  - [ ] comment (presence, length 1-3000)
+- [ ] Set up associations:
+  - [ ] belongs_to :author, class_name: 'User'
+  - [ ] belongs_to :recipient, class_name: 'User'
+- [ ] Create spec for validations
+- [ ] Run and verify tests
+
+## Feedback Controller (Prompt 8)
+- [ ] Generate controller: `rails g controller Feedbacks`
+- [ ] Implement actions:
+  - [ ] create (upsert for current week)
+  - [ ] destroy (only for current_user authored)
+- [ ] Set up strong params for :recipient_id, :score, :comment
+- [ ] Add routes: `resources :feedbacks, only: %i[create destroy]`
+- [ ] Create request specs for success/failure cases
+- [ ] Run and verify tests
+
+## Invite Mailer (Prompt 10)
+- [ ] Generate mailer: `rails g mailer InviteMailer new_invite`
+- [ ] Configure to deliver later with Delayed Job
+- [ ] Create spec that checks job enqueuing and mail.to
+- [ ] Run and verify tests
+
+## Feedback Matrix (Prompt 12)
+- [ ] Add route: `get '/matrix', to: 'feedbacks#matrix'`
+- [ ] Implement matrix action in FeedbacksController
+- [ ] Implement `.matrix_for(users)` SQL method in Feedback model
+- [ ] Create request spec to verify endpoint and JSON response
+- [ ] Run and verify tests
+
+## Additional Tasks
+- [ ] Implement Team association fix (based on team.rb seed support file)
+- [ ] Address any other prompts from the remaining .cursor/docs/prompts files
+- [ ] Test all functionality end-to-end
+- [ ] Run full test suite and fix any failing tests
+
+## Notes
+- When implementing each feature, review existing code patterns
+- Follow established conventions for models, controllers, and specs
+- Keep commit messages clear and descriptive
+- Document any special considerations or assumptions made 
