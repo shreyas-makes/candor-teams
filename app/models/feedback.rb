@@ -17,6 +17,35 @@ class Feedback < ApplicationRecord
     date.beginning_of_week
   end
 
+  # Generate matrix data for heatmap visualization
+  def self.matrix_for(users)
+    user_ids = users.pluck(:id)
+    
+    # Get all feedbacks for the specified users (both as authors and recipients)
+    feedbacks = where(author_id: user_ids, recipient_id: user_ids)
+                .select(:author_id, :recipient_id, :score)
+    
+    # Initialize the matrix data structure
+    matrix = {
+      users: users.map { |user| { id: user.id, name: user.name } },
+      feedback_data: {}
+    }
+    
+    # Populate the matrix with feedback scores
+    feedbacks.each do |feedback|
+      author_id = feedback.author_id.to_s
+      recipient_id = feedback.recipient_id.to_s
+      
+      # Initialize nested hash if it doesn't exist
+      matrix[:feedback_data][author_id] ||= {}
+      
+      # Store the score in the appropriate cell
+      matrix[:feedback_data][author_id][recipient_id] = feedback.score
+    end
+    
+    matrix
+  end
+
   private
 
   def set_week_start

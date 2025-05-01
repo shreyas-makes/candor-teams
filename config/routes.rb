@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   resources :billing_portal, only: [:new, :create]
   resources :blog_posts, controller: :blog_posts, path: "blog", param: :slug
 
+  # Feedback matrix
+  get '/matrix', to: 'feedbacks#matrix'
+
   # Invite routes
   resources :invites, only: :create do
     get 'claim/:token', on: :collection, action: :claim, as: :claim
