@@ -3,6 +3,8 @@ class User < ApplicationRecord
   include Onboardable
   include Billable
 
+  belongs_to :team, optional: true
+
   scope :subscribed, -> { where.not(stripe_subscription_id: [nil, '']) }
 
   # :nocov:
