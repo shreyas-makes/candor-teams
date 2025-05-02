@@ -16,6 +16,15 @@ class ApplicationController < ActionController::Base
     redirect_to dashboard_index_path, notice: "You're already subscribed" if current_user.finished_onboarding?
   end
 
+  def current_team
+    @current_team ||= current_user&.team
+  end
+  helper_method :current_team
+
+  def up
+    render json: { status: "ok" }, status: :ok
+  end
+
   # whitelist extra User model params by uncommenting below and adding User attrs as keys
   # def configure_permitted_parameters
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:username])

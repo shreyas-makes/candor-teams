@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
+  # Health check endpoint
+  get '/up', to: 'application#up'
+
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_up: 'signup' }, controllers: { registrations: 'registrations' }
   get 'logout', to: 'pages#logout', as: 'logout'
 
@@ -16,6 +19,7 @@ Rails.application.routes.draw do
 
   # Feedback matrix
   get '/matrix', to: 'feedbacks#matrix'
+  get '/heat-map', to: 'feedbacks#heat_map'
 
   # Invite routes
   resources :invites, only: :create do

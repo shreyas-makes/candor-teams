@@ -17,6 +17,14 @@ class Feedback < ApplicationRecord
     date.beginning_of_week
   end
 
+  # Class method to snap any Date/Time to the UTC-Monday of its week
+  def self.week_start(date = nil)
+    date ||= Date.current
+    date = date.to_date if date.respond_to?(:to_date)
+    # Get the beginning of the week (Monday)
+    date.beginning_of_week
+  end
+
   # Generate matrix data for heatmap visualization
   def self.matrix_for(users)
     user_ids = users.pluck(:id)
@@ -25,25 +33,33 @@ class Feedback < ApplicationRecord
     feedbacks = where(author_id: user_ids, recipient_id: user_ids)
                 .select(:author_id, :recipient_id, :score)
     
+    # Create user info array
+    users_array = users.map { |user| { id: user.id, name: user.name } }
+    
     # Initialize the matrix data structure
-    matrix = {
-      users: users.map { |user| { id: user.id, name: user.name } },
-      feedback_data: {}
-    }
+    matrix = Array.new(users.length) { Array.new(users.length, nil) }
+    
+    # Create a mapping of user IDs to array indices
+    user_id_to_index = {}
+    users.each_with_index { |user, index| user_id_to_index[user.id] = index }
     
     # Populate the matrix with feedback scores
     feedbacks.each do |feedback|
-      author_id = feedback.author_id.to_s
-      recipient_id = feedback.recipient_id.to_s
+      from_idx = user_id_to_index[feedback.author_id]
+      to_idx = user_id_to_index[feedback.recipient_id]
       
-      # Initialize nested hash if it doesn't exist
-      matrix[:feedback_data][author_id] ||= {}
+      # Skip if we can't find the indices (shouldn't happen, but just in case)
+      next unless from_idx && to_idx
       
       # Store the score in the appropriate cell
-      matrix[:feedback_data][author_id][recipient_id] = feedback.score
+      matrix[from_idx][to_idx] = feedback.score
     end
     
-    matrix
+    # Return the completed matrix data
+    {
+      users: users_array,
+      matrix: matrix
+    }
   end
 
   private
